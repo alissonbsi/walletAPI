@@ -18,7 +18,7 @@ import com.wallet.response.Response;
 import com.wallet.service.UserService;
 
 @RestController
-@RequestMapping("user")
+@RequestMapping("/user")
 public class UserControle {
 
 	@Autowired
@@ -29,6 +29,10 @@ public class UserControle {
 		
 		Response<UserDTO> response = new Response<UserDTO>();
 		
+		if(result.hasErrors()) {
+			result.getAllErrors().forEach(error -> response.getErrors().add(error.getDefaultMessage()));
+			return ResponseEntity.badRequest().body(response);
+		}
 		User user = userService.save(this.convertDtoToEntity(userDto));
 		
 		response.setData(this.convertEntityToDto(user));
@@ -43,6 +47,7 @@ public class UserControle {
 	 */
 	private User convertDtoToEntity(UserDTO dto) {
 		User user = new User();
+		user.setId(dto.getId());
 		user.setEmail(dto.getEmail());
 		user.setName(dto.getName());
 		user.setPassword(dto.getPassword());
@@ -52,6 +57,7 @@ public class UserControle {
 	
 	private UserDTO convertEntityToDto(User user) {
 		UserDTO userDto = new UserDTO();
+		userDto.setId(user.getId());
 		userDto.setEmail(user.getEmail());
 		userDto.setName(user.getName());
 		userDto.setPassword(user.getPassword());
