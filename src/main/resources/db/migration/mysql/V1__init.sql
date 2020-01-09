@@ -2,7 +2,7 @@
 create table users(
 id integer ,
 name varchar(200),
-senha varchar(8),
+senha varchar(200),
 email varchar(200),
 primary key (id));
 
