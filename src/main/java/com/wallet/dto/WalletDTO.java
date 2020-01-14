@@ -33,6 +33,10 @@ public class WalletDTO {
 	public void setValue(BigDecimal value) {
 		this.value = value;
 	}
+	@Override
+	public String toString() {
+		return "WalletDTO [id=" + id + ", name=" + name + ", value=" + value + "]";
+	}
 	
 	
 
